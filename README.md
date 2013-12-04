@@ -1,4 +1,4 @@
-dimensions
+Dimensions
 ==========
 
 Dimensions
