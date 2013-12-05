@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace EBT\Dimensions\Tests;
+namespace EBT\Dimensions\Tests\Dimension;
 
 use EBT\Dimensions\Dimension\BusinessType;
 

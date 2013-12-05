@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace EBT\Dimensions\Tests;
+namespace EBT\Dimensions\Tests\Dimension;
 
 use EBT\Dimensions\Dimension\BusinessType;
 
@@ -22,5 +22,5 @@ class BaseDimensionTest extends TestCase
         $businessType = new BusinessType(BusinessType::B2B);
         $this->assertEquals($originalJson, json_encode($businessType));
     }
-    
+
 }
