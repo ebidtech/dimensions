@@ -17,7 +17,7 @@ class Country extends BaseDimension
 {
     use NumericValidatorTrait;
 
-    const SERIALIZABLE_KEY = 'country';
+    protected static $serializable_key = 'country';
 
     /**
      * @inheritdoc
@@ -32,6 +32,10 @@ class Country extends BaseDimension
     {
         parent::__construct($value);
 
+        if (is_null($value) || static::NULL_STR_REPRESENTATION == $value) {
+            return;
+        }
+
         $this->validatePositiveIntegerOrException($value);
 
         $this->value = $value;
@@ -42,16 +46,8 @@ class Country extends BaseDimension
         return $this->getValue();
     }
 
-    public static function countryBuilder($countryID)
+    public static function country($countryID = null)
     {
         return new static($countryID);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public static function getSerializableKey()
-    {
-        return static::SERIALIZABLE_KEY;
     }
 }

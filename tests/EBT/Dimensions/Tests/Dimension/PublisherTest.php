@@ -11,15 +11,18 @@
 
 namespace EBT\Dimensions\Tests\Dimension;
 
+use EBT\Dimensions\Tests\TestCase;
 use EBT\Dimensions\Dimension\Publisher;
 
 class PublisherTest extends TestCase
 {
     public function testJsonSerialize()
     {
-        $originalArray = array(Publisher::SERIALIZABLE_KEY => Publisher::B2B);
+        $publisherId = 10;
+
+        $originalArray = array(Publisher::getSerializableKey() => $publisherId);
         $originalJson = json_encode($originalArray);
-        $businessType = new Publisher(Publisher::B2B);
+        $businessType = new Publisher($publisherId);
         $this->assertEquals($originalJson, json_encode($businessType));
     }
 }

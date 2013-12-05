@@ -71,7 +71,7 @@ class DimensionGroup
 
         /** @var DimensionInterface $dimension */
         foreach ($this as $dimension) {
-            $dimensions[$dimension->getSerializableKey()] = $dimension->getValue();
+            $dimensions[$dimension::getSerializableKey()] = $dimension->getValue();
         }
 
         return $dimensions;

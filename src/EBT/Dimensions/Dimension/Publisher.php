@@ -17,7 +17,7 @@ class Publisher extends BaseDimension
 {
     use NumericValidatorTrait;
 
-    const SERIALIZABLE_KEY = 'pub';
+    protected static $serializable_key = 'pub';
 
     /**
      * @inheritdoc
@@ -31,6 +31,10 @@ class Publisher extends BaseDimension
     {
         parent::__construct($value);
 
+        if (is_null($value) || static::NULL_STR_REPRESENTATION == $value) {
+            return;
+        }
+
         $this->validatePositiveIntegerOrException($value);
 
         $this->value = $value;
@@ -41,16 +45,8 @@ class Publisher extends BaseDimension
         return $this->getValue();
     }
 
-    public static function PublisherBuilder($publisherID)
+    public static function publisher($publisherID = null)
     {
         return new static($publisherID);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public static function getSerializableKey()
-    {
-        return static::SERIALIZABLE_KEY;
     }
 }

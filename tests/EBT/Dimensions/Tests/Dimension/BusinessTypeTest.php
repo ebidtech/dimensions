@@ -11,13 +11,14 @@
 
 namespace EBT\Dimensions\Tests\Dimension;
 
+use EBT\Dimensions\Tests\TestCase;
 use EBT\Dimensions\Dimension\BusinessType;
 
 class BusinessTypeTest extends TestCase
 {
     public function testJsonSerialize()
     {
-        $originalArray = array(BusinessType::SERIALIZABLE_KEY => BusinessType::B2B);
+        $originalArray = array(BusinessType::getSerializableKey() => BusinessType::B2B);
         $originalJson = json_encode($originalArray);
         $businessType = new BusinessType(BusinessType::B2B);
         $this->assertEquals($originalJson, json_encode($businessType));

@@ -15,7 +15,8 @@ class Scope extends BaseDimension
 {
     const PUBLISHER = 'pub';
     const GLOBALSCOPE = 'glo';
-    const SERIALIZABLE_KEY = 'scope';
+
+    protected static $serializable_key = 'scope';
 
     /**
      * @inheritdoc
@@ -55,13 +56,5 @@ class Scope extends BaseDimension
     public static function gglobal()
     {
         return new static(static::GLOBALSCOPE);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public static function getSerializableKey()
-    {
-        return static::SERIALIZABLE_KEY;
     }
 }

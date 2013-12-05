@@ -11,15 +11,17 @@
 
 namespace EBT\Dimensions\Tests\Dimension;
 
+use EBT\Dimensions\Tests\TestCase;
 use EBT\Dimensions\Dimension\Country;
 
 class CountryTest extends TestCase
 {
     public function testJsonSerialize()
     {
-        $originalArray = array(Country::SERIALIZABLE_KEY => Country::B2B);
+        $countryId = 1;
+        $originalArray = array(Country::getSerializableKey() => $countryId);
         $originalJson = json_encode($originalArray);
-        $businessType = new Country(Country::B2B);
+        $businessType = new Country($countryId);
         $this->assertEquals($originalJson, json_encode($businessType));
     }
 }

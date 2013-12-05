@@ -18,6 +18,11 @@ abstract class BaseDimension implements DimensionInterface
     const NULL_STR_REPRESENTATION = 'NA';
 
     /**
+     * @var string Must be defined if you want to use it in getSerializableKey()
+     */
+    protected static $serializable_key;
+
+    /**
      * @var string
      */
     protected $value;
@@ -61,7 +66,7 @@ abstract class BaseDimension implements DimensionInterface
      */
     public function isDefined()
     {
-        return is_null($this->value);
+        return !is_null($this->value);
     }
 
     /**
@@ -70,6 +75,14 @@ abstract class BaseDimension implements DimensionInterface
     public function getValue()
     {
         return $this->value;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getKey()
+    {
+        return static::getSerializableKey();
     }
 
     /**
@@ -85,6 +98,9 @@ abstract class BaseDimension implements DimensionInterface
      */
     public static function getSerializableKey()
     {
+        if (isset(static::$serializable_key)) {
+            return static::$serializable_key;
+        }
         $reflection = new \ReflectionClass(get_called_class());
         return $reflection->getShortName();
     }

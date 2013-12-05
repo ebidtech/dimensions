@@ -15,7 +15,8 @@ class BusinessType extends BaseDimension
 {
     const B2B = 'b2b';
     const B2C = 'b2c';
-    const SERIALIZABLE_KEY = 'biz_type';
+
+    protected static $serializable_key = 'biz_type';
 
     /**
      * @inheritdoc
@@ -55,13 +56,5 @@ class BusinessType extends BaseDimension
     public static function b2c()
     {
         return new static(static::B2C);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public static function getSerializableKey()
-    {
-        return static::SERIALIZABLE_KEY;
     }
 }

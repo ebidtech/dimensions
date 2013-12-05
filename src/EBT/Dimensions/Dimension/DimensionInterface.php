@@ -19,11 +19,13 @@ interface DimensionInterface extends \JsonSerializable
 
     public function getValue();
 
+    public function getKey();
+
     /**
      * Should return an array of valid values to be validated in the constructor
      * Returning false disables this validation in the constructor
      *
-     * @return array
+     * @return string
      */
     public static function getSerializableKey();
 }
