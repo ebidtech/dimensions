@@ -23,4 +23,23 @@ class BusinessTypeTest extends TestCase
         $businessType = new BusinessType(BusinessType::B2B);
         $this->assertEquals($originalJson, json_encode($businessType));
     }
+
+    /**
+     * @dataProvider provider
+     */
+    public function testConstruction(BusinessType $businessType, $expectedIsDefined, $expectedToString)
+    {
+        $this->assertEquals($expectedToString, $businessType->__toString());
+        $this->assertEquals($expectedIsDefined, $businessType->isDefined());
+        $this->assertEquals(BusinessType::getSerializableKey(), $businessType->getKey());
+    }
+
+    public function provider()
+    {
+        return array(
+            array(new BusinessType(), false, BusinessType::NULL_STR_REPRESENTATION),
+            array(new BusinessType(BusinessType::B2B), true, BusinessType::B2B),
+            array(new BusinessType(BusinessType::B2C), true, BusinessType::B2C)
+        );
+    }
 }

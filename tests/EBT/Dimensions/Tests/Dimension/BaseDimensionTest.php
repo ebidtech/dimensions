@@ -12,16 +12,29 @@
 namespace EBT\Dimensions\Tests\Dimension;
 
 use EBT\Dimensions\Tests\TestCase;
-use EBT\Dimensions\Dimension\BusinessType;
+use EBT\Dimensions\Dimension\BaseDimension;
 
 class BaseDimensionTest extends TestCase
 {
-    public function testJsonSerialize()
+    /**
+     * @dataProvider provider
+     */
+    public function testConstructor(BaseDimension $baseDimension, $expectedValue, $expectedToString)
     {
-        $originalArray = array(BusinessType::getSerializableKey() => BusinessType::B2B);
-        $originalJson = json_encode($originalArray);
-        $businessType = new BusinessType(BusinessType::B2B);
-        $this->assertEquals($originalJson, json_encode($businessType));
+        $this->assertEquals($expectedToString, $baseDimension->__toString());
+        $this->assertEquals($expectedValue, $baseDimension->getValue());
+        $this->assertEquals(get_class($baseDimension), $baseDimension->getKey());
+        $this->assertEquals('BaseDimension', BaseDimension::getSerializableKey());
     }
 
+    public function provider()
+    {
+        return array(
+            array(
+                $this->getMockForAbstractClass('\EBT\Dimensions\Dimension\BaseDimension'),
+                null,
+                BaseDimension::NULL_STR_REPRESENTATION,
+            ),
+        );
+    }
 }

@@ -24,4 +24,23 @@ class CountryTest extends TestCase
         $businessType = new Country($countryId);
         $this->assertEquals($originalJson, json_encode($businessType));
     }
+
+    /**
+     * @dataProvider provider
+     */
+    public function testConstruction(Country $country, $expectedIsDefined, $expectedToString)
+    {
+        $this->assertEquals($expectedToString, $country->__toString());
+        $this->assertEquals($expectedIsDefined, $country->isDefined());
+        $this->assertEquals(Country::getSerializableKey(), $country->getKey());
+    }
+
+    public function provider()
+    {
+        return array(
+            array(new Country(), false, Country::NULL_STR_REPRESENTATION),
+            array(new Country(1), true, 1),
+            array(new Country(2), true, 2)
+        );
+    }
 }

@@ -27,7 +27,7 @@ class Publisher extends BaseDimension
         return false;
     }
 
-    public function __construct($value)
+    public function __construct($value = null)
     {
         parent::__construct($value);
 

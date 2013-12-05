@@ -46,7 +46,6 @@ abstract class BaseDimension implements DimensionInterface
                 );
             }
         }
-
         $this->value = $value;
     }
 

@@ -25,4 +25,23 @@ class PublisherTest extends TestCase
         $businessType = new Publisher($publisherId);
         $this->assertEquals($originalJson, json_encode($businessType));
     }
+
+    /**
+     * @dataProvider provider
+     */
+    public function testConstruction(Publisher $publisher, $expectedIsDefined, $expectedToString)
+    {
+        $this->assertEquals($expectedToString, $publisher->__toString());
+        $this->assertEquals($expectedIsDefined, $publisher->isDefined());
+        $this->assertEquals(Publisher::getSerializableKey(), $publisher->getKey());
+    }
+
+    public function provider()
+    {
+        return array(
+            array(new Publisher(), false, Publisher::NULL_STR_REPRESENTATION),
+            array(new Publisher(1), true, 1),
+            array(new Publisher(2), true, 2)
+        );
+    }
 }

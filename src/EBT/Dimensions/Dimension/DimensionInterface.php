@@ -28,4 +28,7 @@ interface DimensionInterface extends \JsonSerializable
      * @return string
      */
     public static function getSerializableKey();
+
+
+    public static function fromArray(array $data);
 }

@@ -11,11 +11,20 @@
 
 namespace EBT\Dimensions\Tests\Dimension;
 
+use EBT\Dimensions\Dimension\BaseDimension;
 use EBT\Dimensions\Tests\TestCase;
 use EBT\Dimensions\Dimension\Scope;
 
 class ScopeTest extends TestCase
 {
+    public function testJsonSerialize()
+    {
+        $originalArray = array(Scope::getSerializableKey() => Scope::GLOBALSCOPE);
+        $originalJson = json_encode($originalArray);
+        $businessType = new Scope(Scope::GLOBALSCOPE);
+        $this->assertEquals($originalJson, json_encode($businessType));
+    }
+
     /**
      * @dataProvider provider
      */
@@ -23,15 +32,7 @@ class ScopeTest extends TestCase
     {
         $this->assertEquals($expectedToString, $scope->__toString());
         $this->assertEquals($expectedIsDefined, $scope->isDefined());
-    }
-
-
-    public function testJsonSerialize()
-    {
-        $originalArray = array(Scope::getSerializableKey() => Scope::GLOBALSCOPE);
-        $originalJson = json_encode($originalArray);
-        $businessType = new Scope(Scope::GLOBALSCOPE);
-        $this->assertEquals($originalJson, json_encode($businessType));
+        $this->assertEquals(Scope::getSerializableKey(), $scope->getKey());
     }
 
     public function provider()
