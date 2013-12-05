@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * This file is a part of the Dimensions library.
  *
  * (c) 2013 Ebidtech
@@ -9,15 +9,8 @@
  * file that was distributed with this source code.
  */
 
-namespace EBT\Dimensions;
+namespace EBT\Dimensions\Exception;
 
-/**
- * Dummy
- */
-class Dummy
+class InvalidArgumentException extends \InvalidArgumentException
 {
-    public function get()
-    {
-        return 5;
-    }
 }
