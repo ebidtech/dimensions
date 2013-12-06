@@ -11,17 +11,33 @@
 
 namespace EBT\Dimensions\Dimension;
 
-class BusinessType extends BaseDimension
+use EBT\Dimensions\Exception\InvalidArgumentException;
+use EBT\Dimensions\Common\KeyTrait;
+use EBT\Dimensions\Common\ValueTrait;
+
+class BusinessType implements DimensionInterface
 {
+    use KeyTrait;
+    use ValueTrait;
+
     const B2B = 'b2b';
     const B2C = 'b2c';
+    const KEY = 'biz_type';
 
-    protected static $serializable_key = 'biz_type';
+    /**
+     * @param string|null $businessType
+     *
+     * @throws InvalidArgumentException
+     */
+    public function __construct($businessType = null)
+    {
+        $this->setEnum($businessType);
+    }
 
     /**
      * @inheritdoc
      */
-    protected function getAllPossibleValues()
+    public static function getPossibleValues()
     {
         return array(static::B2B, static::B2C);
     }
@@ -31,7 +47,7 @@ class BusinessType extends BaseDimension
      */
     public function isB2b()
     {
-        return ($this->getValue() == static::B2B);
+        return $this->getValue() == static::B2B;
     }
 
     /**
@@ -39,11 +55,11 @@ class BusinessType extends BaseDimension
      */
     public function isB2c()
     {
-        return ($this->getValue() == static::B2C);
+        return $this->getValue() == static::B2C;
     }
 
     /**
-     * @return static
+     * @return BusinessType
      */
     public static function b2b()
     {
@@ -51,7 +67,7 @@ class BusinessType extends BaseDimension
     }
 
     /**
-     * @return static
+     * @return BusinessType
      */
     public static function b2c()
     {

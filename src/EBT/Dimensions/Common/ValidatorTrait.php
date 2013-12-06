@@ -9,32 +9,34 @@
  * file that was distributed with this source code.
  */
 
-namespace EBT\Dimensions\TTrait;
+namespace EBT\Dimensions\Common;
 
 use EBT\Dimensions\Exception\InvalidDimensionArgumentException;
 
 /**
- * NumericValidatorTrait
+ * ValidatorTrait
  */
-trait NumericValidatorTrait
+trait ValidatorTrait
 {
     /**
-     * validates argument as Positive Integer
+     * Throws exception if values is not an positive integer
      *
+     * @param mixed $value
+     *
+     * @throws InvalidDimensionArgumentException
      */
-    public function validatePositiveIntegerOrException($value)
+    protected function positiveIntegerOrException($value)
     {
         if (!is_integer($value)) {
             throw new InvalidDimensionArgumentException(
-                sprintf('Expected integer, % given.', gettype($value))
+                sprintf('Expected integer, "%s" given.', gettype($value))
             );
         }
 
         if ($value < 1) {
             throw new InvalidDimensionArgumentException(
-                sprintf('Expected positive integer, % given.', $value)
+                sprintf('Expected positive integer, "%d" given.', $value)
             );
         }
-        return true;
     }
 }

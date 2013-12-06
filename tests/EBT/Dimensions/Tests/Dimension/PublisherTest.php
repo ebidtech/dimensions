@@ -16,14 +16,13 @@ use EBT\Dimensions\Dimension\Publisher;
 
 class PublisherTest extends TestCase
 {
-    public function testJsonSerialize()
+    public function testBuilders()
     {
-        $publisherId = 10;
+        $publisherId = 20;
+        $publisher = Publisher::create($publisherId);
+        $this->assertEquals($publisherId, $publisher->getId());
 
-        $originalArray = array(Publisher::getSerializableKey() => $publisherId);
-        $originalJson = json_encode($originalArray);
-        $businessType = new Publisher($publisherId);
-        $this->assertEquals($originalJson, json_encode($businessType));
+        $this->assertFalse(Publisher::none()->isDefined());
     }
 
     /**
@@ -33,13 +32,13 @@ class PublisherTest extends TestCase
     {
         $this->assertEquals($expectedToString, $publisher->__toString());
         $this->assertEquals($expectedIsDefined, $publisher->isDefined());
-        $this->assertEquals(Publisher::getSerializableKey(), $publisher->getKey());
+        $this->assertEquals(Publisher::KEY, $publisher->getKey());
     }
 
     public function provider()
     {
         return array(
-            array(new Publisher(), false, Publisher::NULL_STR_REPRESENTATION),
+            array(new Publisher(), false, Publisher::getNullStrRepresentation()),
             array(new Publisher(1), true, 1),
             array(new Publisher(2), true, 2)
         );

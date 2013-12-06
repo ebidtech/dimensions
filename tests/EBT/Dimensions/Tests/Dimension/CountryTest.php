@@ -16,13 +16,19 @@ use EBT\Dimensions\Dimension\Country;
 
 class CountryTest extends TestCase
 {
-    public function testJsonSerialize()
+    public function testConstruct()
     {
-        $countryId = 1;
-        $originalArray = array(Country::getSerializableKey() => $countryId);
-        $originalJson = json_encode($originalArray);
-        $businessType = new Country($countryId);
-        $this->assertEquals($originalJson, json_encode($businessType));
+        $countryId = 10;
+        $this->assertEquals($countryId, (new Country($countryId))->getId());
+    }
+
+    public function testBuilders()
+    {
+        $countryId = 10;
+        $country = Country::create($countryId);
+        $this->assertEquals($countryId, $country->getId());
+
+        $this->assertFalse(Country::none()->isDefined());
     }
 
     /**
@@ -32,13 +38,13 @@ class CountryTest extends TestCase
     {
         $this->assertEquals($expectedToString, $country->__toString());
         $this->assertEquals($expectedIsDefined, $country->isDefined());
-        $this->assertEquals(Country::getSerializableKey(), $country->getKey());
+        $this->assertEquals(Country::KEY, $country->getKey());
     }
 
     public function provider()
     {
         return array(
-            array(new Country(), false, Country::NULL_STR_REPRESENTATION),
+            array(new Country(), false, Country::getNullStrRepresentation()),
             array(new Country(1), true, 1),
             array(new Country(2), true, 2)
         );
