@@ -43,7 +43,7 @@ class CountryTest extends TestCase
     {
         $this->assertEquals($expectedToString, $country->__toString());
         $this->assertEquals($expectedIsDefined, $country->isDefined());
-        $this->assertEquals(Country::create()->getKey(), $country->getKey());
+        $this->assertEquals(Country::none()->getKey(), $country->getKey());
     }
 
     public function provider()

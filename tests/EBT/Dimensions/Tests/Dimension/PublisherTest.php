@@ -37,7 +37,7 @@ class PublisherTest extends TestCase
     {
         $this->assertEquals($expectedToString, $publisher->__toString());
         $this->assertEquals($expectedIsDefined, $publisher->isDefined());
-        $this->assertEquals(Publisher::create()->getKey(), $publisher->getKey());
+        $this->assertEquals(Publisher::none()->getKey(), $publisher->getKey());
     }
 
     public function provider()
