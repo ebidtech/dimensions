@@ -1,11 +1,12 @@
 <?php
 
 /**
- * LICENSE: [EMAILBIDDING_DESCRIPTION_LICENSE_HERE]
+ * This file is a part of the Dimensions library.
  *
- * @author     Eduardo Oliveira <eduardo.oliveira@emailbidding.com>
- * @copyright  2012-2013 Emailbidding
- * @license    [EMAILBIDDING_URL_LICENSE_HERE]
+ * (c) 2013 Ebidtech
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace EBT\Dimensions\Common;
