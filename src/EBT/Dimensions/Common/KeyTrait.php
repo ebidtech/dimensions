@@ -16,8 +16,9 @@ namespace EBT\Dimensions\Common;
  */
 trait KeyTrait
 {
-    public static function getKey()
+    public function getKey()
     {
-        return static::KEY;
+        $refClass = new \ReflectionClass($this);
+        return strtolower($refClass->getShortName());
     }
 }

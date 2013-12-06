@@ -14,11 +14,13 @@ namespace EBT\Dimensions\Dimension;
 use EBT\Dimensions\Common\ValidatorTrait;
 use EBT\Dimensions\Common\KeyTrait;
 use EBT\Dimensions\Common\ValueTrait;
+use EBT\Dimensions\Common\ToStringTrait;
 
 class Country implements DimensionInterface
 {
     use KeyTrait;
     use ValueTrait;
+    use ToStringTrait;
 
     const KEY = 'country';
 

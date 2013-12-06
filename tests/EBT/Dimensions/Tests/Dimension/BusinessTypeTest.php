@@ -16,6 +16,11 @@ use EBT\Dimensions\Dimension\BusinessType;
 
 class BusinessTypeTest extends TestCase
 {
+    public function testGetKey()
+    {
+        $this->assertEquals('business_type', BusinessType::none()->getKey());
+    }
+
     public function testBuilders()
     {
         $this->assertTrue(BusinessType::b2b()->isB2b());

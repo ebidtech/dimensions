@@ -55,7 +55,7 @@ class DimensionGroup implements CollectionDirectAccessInterface
      */
     protected function add(DimensionInterface $dimension)
     {
-        $this->collection[$dimension::getKey()] = $dimension;
+        $this->collection[$dimension->getKey()] = $dimension;
     }
 
     /**
@@ -63,7 +63,7 @@ class DimensionGroup implements CollectionDirectAccessInterface
      */
     public function getBusinessType()
     {
-        return $this->getOrExceptionInternal(BusinessType::getKey());
+        return $this->getOrExceptionInternal(BusinessType::none()->getKey());
     }
 
     /**
@@ -71,7 +71,7 @@ class DimensionGroup implements CollectionDirectAccessInterface
      */
     public function getScope()
     {
-        return $this->getOrExceptionInternal(Scope::getKey());
+        return $this->getOrExceptionInternal(Scope::none()->getKey());
     }
 
     /**
@@ -79,7 +79,7 @@ class DimensionGroup implements CollectionDirectAccessInterface
      */
     public function getCountry()
     {
-        return $this->getOrExceptionInternal(Country::getKey());
+        return $this->getOrExceptionInternal(Country::none()->getKey());
     }
 
     /**
@@ -87,7 +87,7 @@ class DimensionGroup implements CollectionDirectAccessInterface
      */
     public function getPublisher()
     {
-        return $this->getOrExceptionInternal(Publisher::getKey());
+        return $this->getOrExceptionInternal(Publisher::none()->getKey());
     }
 
     /**
@@ -101,7 +101,7 @@ class DimensionGroup implements CollectionDirectAccessInterface
         foreach ($this as $dimension) {
             // this looks like voodoo, if the value is defined you want to keep the value without casting it to string,
             // eg you want to keep country as integer, when is not defined you want the string representation of null
-            $dimensions[$dimension::getKey()] = $dimension->isDefined()
+            $dimensions[$dimension->getKey()] = $dimension->isDefined()
                 ? $dimension->getValue()
                 : $dimension::getNullStrRepresentation();
         }
@@ -121,14 +121,19 @@ class DimensionGroup implements CollectionDirectAccessInterface
      */
     public static function fromArray(array $data)
     {
-        if (!isset($data[BusinessType::KEY], $data[Scope::KEY], $data[Country::KEY], $data[Publisher::KEY])) {
+        $bizTypeKey = BusinessType::none()->getKey();
+        $scopeKey = Scope::none()->getKey();
+        $countryKey = Country::none()->getKey();
+        $publisherKey = Publisher::none()->getKey();
+
+        if (!isset($data[$bizTypeKey], $data[$scopeKey], $data[$countryKey], $data[$publisherKey])) {
             throw new InvalidArgumentException('Required key/s not found');
         }
 
-        $businessType = new BusinessType($data[BusinessType::KEY]);
-        $scope = new Scope($data[Scope::KEY]);
-        $country = new Country($data[Country::KEY]);
-        $publisher = new Publisher($data[Publisher::KEY]);
+        $businessType = new BusinessType($data[$bizTypeKey]);
+        $scope = new Scope($data[$scopeKey]);
+        $country = new Country($data[$countryKey]);
+        $publisher = new Publisher($data[$publisherKey]);
 
         return new static($businessType, $scope, $country, $publisher);
     }

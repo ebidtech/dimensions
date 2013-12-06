@@ -31,7 +31,7 @@ interface DimensionInterface
     /**
      * @return string The key
      */
-    public static function getKey();
+    public function getKey();
 
     /**
      * @return string

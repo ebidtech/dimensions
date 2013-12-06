@@ -75,20 +75,4 @@ trait ValueTrait
     {
         return $this->value !== null;
     }
-
-    /**
-     * @inheritdoc
-     */
-    public function __toString()
-    {
-        return $this->value === null ? static::getNullStrRepresentation() : (string) $this->value;
-    }
-
-    /**
-     * @return string
-     */
-    public static function getNullStrRepresentation()
-    {
-        return 'NA';
-    }
 }

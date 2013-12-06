@@ -14,15 +14,16 @@ namespace EBT\Dimensions\Dimension;
 use EBT\Dimensions\Exception\InvalidArgumentException;
 use EBT\Dimensions\Common\KeyTrait;
 use EBT\Dimensions\Common\ValueTrait;
+use EBT\Dimensions\Common\ToStringTrait;
 
 class BusinessType implements DimensionInterface
 {
     use KeyTrait;
     use ValueTrait;
+    use ToStringTrait;
 
     const B2B = 'b2b';
     const B2C = 'b2c';
-    const KEY = 'biz_type';
 
     /**
      * @param string|null $businessType
@@ -40,6 +41,14 @@ class BusinessType implements DimensionInterface
     public static function getPossibleValues()
     {
         return array(static::B2B, static::B2C);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getKey()
+    {
+        return 'business_type';
     }
 
     /**
@@ -72,5 +81,13 @@ class BusinessType implements DimensionInterface
     public static function b2c()
     {
         return new static(static::B2C);
+    }
+
+    /**
+     * @return BusinessType
+     */
+    public static function none()
+    {
+        return new static();
     }
 }

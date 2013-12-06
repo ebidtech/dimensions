@@ -16,6 +16,11 @@ use EBT\Dimensions\Dimension\Country;
 
 class CountryTest extends TestCase
 {
+    public function testGetKey()
+    {
+        $this->assertEquals('country', Country::none()->getKey());
+    }
+
     public function testConstruct()
     {
         $countryId = 10;
@@ -38,7 +43,7 @@ class CountryTest extends TestCase
     {
         $this->assertEquals($expectedToString, $country->__toString());
         $this->assertEquals($expectedIsDefined, $country->isDefined());
-        $this->assertEquals(Country::KEY, $country->getKey());
+        $this->assertEquals(Country::create()->getKey(), $country->getKey());
     }
 
     public function provider()

@@ -14,6 +14,7 @@ namespace EBT\Dimensions\Dimension;
 use EBT\Dimensions\Exception\InvalidArgumentException;
 use EBT\Dimensions\Common\KeyTrait;
 use EBT\Dimensions\Common\ValueTrait;
+use EBT\Dimensions\Common\ToStringTrait;
 
 /**
  * Scope, represents the scope publisher or global.
@@ -22,6 +23,7 @@ class Scope implements DimensionInterface
 {
     use KeyTrait;
     use ValueTrait;
+    use ToStringTrait;
 
     const PUBLISHER_SCOPE = 'pub';
     const GLOBAL_SCOPE = 'glo';
@@ -75,5 +77,13 @@ class Scope implements DimensionInterface
     public static function gglobal()
     {
         return new static(static::GLOBAL_SCOPE);
+    }
+
+    /**
+     * @return Scope
+     */
+    public static function none()
+    {
+        return new static();
     }
 }

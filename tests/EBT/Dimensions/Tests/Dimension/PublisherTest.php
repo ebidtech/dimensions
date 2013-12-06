@@ -16,6 +16,11 @@ use EBT\Dimensions\Dimension\Publisher;
 
 class PublisherTest extends TestCase
 {
+    public function testGetKey()
+    {
+        $this->assertEquals('publisher', Publisher::none()->getKey());
+    }
+
     public function testBuilders()
     {
         $publisherId = 20;
@@ -32,7 +37,7 @@ class PublisherTest extends TestCase
     {
         $this->assertEquals($expectedToString, $publisher->__toString());
         $this->assertEquals($expectedIsDefined, $publisher->isDefined());
-        $this->assertEquals(Publisher::KEY, $publisher->getKey());
+        $this->assertEquals(Publisher::create()->getKey(), $publisher->getKey());
     }
 
     public function provider()

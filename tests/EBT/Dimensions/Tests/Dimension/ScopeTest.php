@@ -17,6 +17,11 @@ use EBT\Dimensions\Dimension\Scope;
 
 class ScopeTest extends TestCase
 {
+    public function testGetKey()
+    {
+        $this->assertEquals('scope', Scope::none()->getKey());
+    }
+
     public function testBuilders()
     {
         $this->assertTrue(Scope::publisher()->isPublisher());
@@ -30,7 +35,7 @@ class ScopeTest extends TestCase
     {
         $this->assertEquals($expectedToString, $scope->__toString());
         $this->assertEquals($expectedIsDefined, $scope->isDefined());
-        $this->assertEquals(Scope::KEY, $scope->getKey());
+        $this->assertEquals(Scope::none()->getKey(), $scope->getKey());
     }
 
     public function provider()
