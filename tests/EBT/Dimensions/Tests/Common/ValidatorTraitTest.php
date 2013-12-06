@@ -22,7 +22,7 @@ class ValidatorTraitTest extends TestCase
     use ValidatorTrait;
 
     /**
-     * @expectedException \EBT\Dimensions\Exception\InvalidDimensionArgumentException
+     * @expectedException \EBT\Dimensions\Exception\InvalidArgumentException
      */
     public function testNotInteger()
     {
@@ -30,7 +30,7 @@ class ValidatorTraitTest extends TestCase
     }
 
     /**
-     * @expectedException \EBT\Dimensions\Exception\InvalidDimensionArgumentException
+     * @expectedException \EBT\Dimensions\Exception\InvalidArgumentException
      */
     public function testNegative()
     {

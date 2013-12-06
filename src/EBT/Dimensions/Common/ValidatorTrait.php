@@ -11,7 +11,7 @@
 
 namespace EBT\Dimensions\Common;
 
-use EBT\Dimensions\Exception\InvalidDimensionArgumentException;
+use EBT\Dimensions\Exception\InvalidArgumentException;
 
 /**
  * ValidatorTrait
@@ -23,18 +23,18 @@ trait ValidatorTrait
      *
      * @param mixed $value
      *
-     * @throws InvalidDimensionArgumentException
+     * @throws InvalidArgumentException
      */
     protected function positiveIntegerOrException($value)
     {
         if (!is_integer($value)) {
-            throw new InvalidDimensionArgumentException(
+            throw new InvalidArgumentException(
                 sprintf('Expected integer, "%s" given.', gettype($value))
             );
         }
 
         if ($value < 1) {
-            throw new InvalidDimensionArgumentException(
+            throw new InvalidArgumentException(
                 sprintf('Expected positive integer, "%d" given.', $value)
             );
         }
