@@ -11,42 +11,50 @@
 
 namespace EBT\Dimensions\Dimension;
 
-use EBT\Dimensions\TTrait\NumericValidatorTrait;
+use EBT\Dimensions\Common\ValidatorTrait;
+use EBT\Dimensions\Common\KeyTrait;
+use EBT\Dimensions\Common\ValueTrait;
+use EBT\Dimensions\Common\ToStringTrait;
 
-class Publisher extends BaseDimension
+class Publisher implements DimensionInterface
 {
-    use NumericValidatorTrait;
+    use KeyTrait;
+    use ValueTrait;
+    use ToStringTrait;
 
-    protected static $serializable_key = 'pub';
+    const KEY = 'pub';
 
     /**
-     * @inheritdoc
+     * @param int|null $value
      */
-    protected function getAllPossibleValues()
-    {
-        return false;
-    }
-
     public function __construct($value = null)
     {
-        parent::__construct($value);
-
-        if (is_null($value) || static::NULL_STR_REPRESENTATION == $value) {
-            return;
-        }
-
-        $this->validatePositiveIntegerOrException($value);
-
-        $this->value = $value;
+        $this->setPositiveInteger($value);
     }
 
-    public function getPublisherId()
+    /**
+     * @return int|null
+     */
+    public function getId()
     {
         return $this->getValue();
     }
 
-    public static function publisher($publisherID = null)
+    /**
+     * @param int|null $publisherId
+     *
+     * @return Publisher
+     */
+    public static function create($publisherId = null)
     {
-        return new static($publisherID);
+        return new static($publisherId);
+    }
+
+    /**
+     * @return Publisher
+     */
+    public static function none()
+    {
+        return static::create();
     }
 }

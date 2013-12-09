@@ -21,14 +21,18 @@ use EBT\Collection\CountableTrait;
 use EBT\Collection\EmptyTrait;
 use EBT\Collection\DirectAccessTrait;
 use EBT\Collection\GetCollectionTrait;
+use EBT\Collection\CollectionDirectAccessInterface;
 use EBT\Dimensions\Exception\InvalidArgumentException;
 
-class DimensionGroup
+class DimensionGroup implements CollectionDirectAccessInterface
 {
     use IterableTrait;
     use CountableTrait;
     use EmptyTrait;
-    use DirectAccessTrait;
+    use DirectAccessTrait {
+        get as protected getInternal;
+        getOrException as protected getOrExceptionInternal;
+    }
     use GetCollectionTrait;
 
     /**
@@ -51,15 +55,39 @@ class DimensionGroup
      */
     protected function add(DimensionInterface $dimension)
     {
-        $dimensionKey = $dimension->getKey();
+        $this->collection[$dimension->getKey()] = $dimension;
+    }
 
-        if ($this->has($dimensionKey)) {
-            throw new InvalidArgumentException(
-                sprintf('A dimension with same name "%s" already present.', $dimensionKey)
-            );
-        }
+    /**
+     * @return BusinessType
+     */
+    public function getBusinessType()
+    {
+        return $this->getOrExceptionInternal(BusinessType::none()->getKey());
+    }
 
-        $this->collection[(string) $dimensionKey] = $dimension;
+    /**
+     * @return Scope
+     */
+    public function getScope()
+    {
+        return $this->getOrExceptionInternal(Scope::none()->getKey());
+    }
+
+    /**
+     * @return Country
+     */
+    public function getCountry()
+    {
+        return $this->getOrExceptionInternal(Country::none()->getKey());
+    }
+
+    /**
+     * @return Publisher
+     */
+    public function getPublisher()
+    {
+        return $this->getOrExceptionInternal(Publisher::none()->getKey());
     }
 
     /**
@@ -71,37 +99,41 @@ class DimensionGroup
 
         /** @var DimensionInterface $dimension */
         foreach ($this as $dimension) {
-            $dimensions[$dimension::getSerializableKey()] = $dimension->getValue();
+            // this looks like voodoo, if the value is defined you want to keep the value without casting it to string,
+            // eg you want to keep country as integer, when is not defined you want the string representation of null
+            $dimensions[$dimension->getKey()] = $dimension->isDefined()
+                ? $dimension->getValue()
+                : $dimension::getNullStrRepresentation();
         }
 
         return $dimensions;
     }
 
     /**
-     * @param array $data         array(
-     *                              'dimension_key_1' => 'value',
-     *                              'dimension_key_2' => 'value'
-     *                            )
+     * @param array $data array(
+     *                        'dimension_key_1' => 'value',
+     *                        'dimension_key_2' => 'value'
+     *                    )
      *
-     * @throws Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
+     *
      * @return DimensionGroup
      */
     public static function fromArray(array $data)
     {
-        if (
-            !isset(
-                $data[BusinessType::SERIALIZABLE_KEY],
-                $data[Scope::SERIALIZABLE_KEY],
-                $data[Country::SERIALIZABLE_KEY],
-                $data[Publisher::SERIALIZABLE_KEY]
-            )
-        ) {
-            throw new InvalidArgumentException('Required key not found');
+        $bizTypeKey = BusinessType::none()->getKey();
+        $scopeKey = Scope::none()->getKey();
+        $countryKey = Country::none()->getKey();
+        $publisherKey = Publisher::none()->getKey();
+
+        if (!isset($data[$bizTypeKey], $data[$scopeKey], $data[$countryKey], $data[$publisherKey])) {
+            throw new InvalidArgumentException('Required key/s not found');
         }
-        $businessType = new BusinessType($data[BusinessType::SERIALIZABLE_KEY]);
-        $scope = new Scope($data[Scope::SERIALIZABLE_KEY]);
-        $country = new Country($data[Country::SERIALIZABLE_KEY]);
-        $publisher = new Publisher($data[Publisher::SERIALIZABLE_KEY]);
+
+        $businessType = new BusinessType($data[$bizTypeKey]);
+        $scope = new Scope($data[$scopeKey]);
+        $country = new Country($data[$countryKey]);
+        $publisher = new Publisher($data[$publisherKey]);
 
         return new static($businessType, $scope, $country, $publisher);
     }

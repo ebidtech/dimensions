@@ -11,19 +11,40 @@
 
 namespace EBT\Dimensions\Dimension;
 
-class Scope extends BaseDimension
-{
-    const PUBLISHER = 'pub';
-    const GLOBALSCOPE = 'glo';
+use EBT\Dimensions\Exception\InvalidArgumentException;
+use EBT\Dimensions\Common\KeyTrait;
+use EBT\Dimensions\Common\ValueTrait;
+use EBT\Dimensions\Common\ToStringTrait;
 
-    protected static $serializable_key = 'scope';
+/**
+ * Scope, represents the scope publisher or global.
+ */
+class Scope implements DimensionInterface
+{
+    use KeyTrait;
+    use ValueTrait;
+    use ToStringTrait;
+
+    const PUBLISHER_SCOPE = 'pub';
+    const GLOBAL_SCOPE = 'glo';
+    const KEY = 'scope';
+
+    /**
+     * @param string|null $scope
+     *
+     * @throws InvalidArgumentException
+     */
+    public function __construct($scope = null)
+    {
+        $this->setEnum($scope);
+    }
 
     /**
      * @inheritdoc
      */
-    protected function getAllPossibleValues()
+    public static function getPossibleValues()
     {
-        return array(static::PUBLISHER, static::GLOBALSCOPE);
+        return array(static::PUBLISHER_SCOPE, static::GLOBAL_SCOPE);
     }
 
     /**
@@ -31,7 +52,7 @@ class Scope extends BaseDimension
      */
     public function isPublisher()
     {
-        return ($this->getValue() == static::PUBLISHER);
+        return $this->getValue() == static::PUBLISHER_SCOPE;
     }
 
     /**
@@ -39,22 +60,30 @@ class Scope extends BaseDimension
      */
     public function isGlobal()
     {
-        return ($this->getValue() == static::GLOBALSCOPE);
+        return $this->getValue() == static::GLOBAL_SCOPE;
     }
 
     /**
-     * @return static
+     * @return Scope
      */
     public static function publisher()
     {
-        return new static(static::PUBLISHER);
+        return new static(static::PUBLISHER_SCOPE);
     }
 
     /**
-     * @return static
+     * @return Scope
      */
     public static function gglobal()
     {
-        return new static(static::GLOBALSCOPE);
+        return new static(static::GLOBAL_SCOPE);
+    }
+
+    /**
+     * @return Scope
+     */
+    public static function none()
+    {
+        return new static();
     }
 }

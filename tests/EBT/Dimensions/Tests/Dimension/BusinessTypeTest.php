@@ -16,12 +16,15 @@ use EBT\Dimensions\Dimension\BusinessType;
 
 class BusinessTypeTest extends TestCase
 {
-    public function testJsonSerialize()
+    public function testGetKey()
     {
-        $originalArray = array(BusinessType::getSerializableKey() => BusinessType::B2B);
-        $originalJson = json_encode($originalArray);
-        $businessType = new BusinessType(BusinessType::B2B);
-        $this->assertEquals($originalJson, json_encode($businessType));
+        $this->assertEquals('business_type', BusinessType::none()->getKey());
+    }
+
+    public function testBuilders()
+    {
+        $this->assertTrue(BusinessType::b2b()->isB2b());
+        $this->assertTrue(BusinessType::b2c()->isB2c());
     }
 
     /**
@@ -31,13 +34,12 @@ class BusinessTypeTest extends TestCase
     {
         $this->assertEquals($expectedToString, $businessType->__toString());
         $this->assertEquals($expectedIsDefined, $businessType->isDefined());
-        $this->assertEquals(BusinessType::getSerializableKey(), $businessType->getKey());
     }
 
     public function provider()
     {
         return array(
-            array(new BusinessType(), false, BusinessType::NULL_STR_REPRESENTATION),
+            array(new BusinessType(), false, BusinessType::getNullStrRepresentation()),
             array(new BusinessType(BusinessType::B2B), true, BusinessType::B2B),
             array(new BusinessType(BusinessType::B2C), true, BusinessType::B2C)
         );

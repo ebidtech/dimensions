@@ -17,12 +17,15 @@ use EBT\Dimensions\Dimension\Scope;
 
 class ScopeTest extends TestCase
 {
-    public function testJsonSerialize()
+    public function testGetKey()
     {
-        $originalArray = array(Scope::getSerializableKey() => Scope::GLOBALSCOPE);
-        $originalJson = json_encode($originalArray);
-        $businessType = new Scope(Scope::GLOBALSCOPE);
-        $this->assertEquals($originalJson, json_encode($businessType));
+        $this->assertEquals('scope', Scope::none()->getKey());
+    }
+
+    public function testBuilders()
+    {
+        $this->assertTrue(Scope::publisher()->isPublisher());
+        $this->assertTrue(Scope::gglobal()->isGlobal());
     }
 
     /**
@@ -32,15 +35,15 @@ class ScopeTest extends TestCase
     {
         $this->assertEquals($expectedToString, $scope->__toString());
         $this->assertEquals($expectedIsDefined, $scope->isDefined());
-        $this->assertEquals(Scope::getSerializableKey(), $scope->getKey());
+        $this->assertEquals(Scope::none()->getKey(), $scope->getKey());
     }
 
     public function provider()
     {
         return array(
-            array(new Scope(), false, Scope::NULL_STR_REPRESENTATION),
-            array(new Scope(Scope::GLOBALSCOPE), true, Scope::GLOBALSCOPE),
-            array(new Scope(Scope::PUBLISHER), true, Scope::PUBLISHER)
+            array(new Scope(), false, Scope::getNullStrRepresentation()),
+            array(new Scope(Scope::GLOBAL_SCOPE), true, Scope::GLOBAL_SCOPE),
+            array(new Scope(Scope::PUBLISHER_SCOPE), true, Scope::PUBLISHER_SCOPE)
         );
     }
 }

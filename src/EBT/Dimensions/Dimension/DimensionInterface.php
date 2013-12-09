@@ -11,24 +11,30 @@
 
 namespace EBT\Dimensions\Dimension;
 
-interface DimensionInterface extends \JsonSerializable
+interface DimensionInterface
 {
+    /**
+     * @return string
+     */
     public function __toString();
 
+    /**
+     * @return bool True in case dimension is defined
+     */
     public function isDefined();
 
+    /**
+     * @return mixed The value itself
+     */
     public function getValue();
 
+    /**
+     * @return string The key
+     */
     public function getKey();
 
     /**
-     * Should return an array of valid values to be validated in the constructor
-     * Returning false disables this validation in the constructor
-     *
      * @return string
      */
-    public static function getSerializableKey();
-
-
-    public static function fromArray(array $data);
+    public static function getNullStrRepresentation();
 }

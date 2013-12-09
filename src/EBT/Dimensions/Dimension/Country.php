@@ -11,43 +11,50 @@
 
 namespace EBT\Dimensions\Dimension;
 
-use EBT\Dimensions\TTrait\NumericValidatorTrait;
+use EBT\Dimensions\Common\ValidatorTrait;
+use EBT\Dimensions\Common\KeyTrait;
+use EBT\Dimensions\Common\ValueTrait;
+use EBT\Dimensions\Common\ToStringTrait;
 
-class Country extends BaseDimension
+class Country implements DimensionInterface
 {
-    use NumericValidatorTrait;
+    use KeyTrait;
+    use ValueTrait;
+    use ToStringTrait;
 
-    protected static $serializable_key = 'country';
+    const KEY = 'country';
 
     /**
-     * @inheritdoc
+     * @param int|null $countryId
      */
-    protected function getAllPossibleValues()
+    public function __construct($countryId = null)
     {
-        /* returning false disables this validation in the constructor */
-        return false;
+        $this->setPositiveInteger($countryId);
     }
 
-    public function __construct($value = null)
-    {
-        parent::__construct($value);
-
-        if (is_null($value) || static::NULL_STR_REPRESENTATION == $value) {
-            return;
-        }
-
-        $this->validatePositiveIntegerOrException($value);
-
-        $this->value = $value;
-    }
-
-    public function getCountryId()
+    /**
+     * @return int
+     */
+    public function getId()
     {
         return $this->getValue();
     }
 
-    public static function country($countryID = null)
+    /**
+     * @param int|null $countryId
+     *
+     * @return Country
+     */
+    public static function create($countryId = null)
     {
-        return new static($countryID);
+        return new static($countryId);
+    }
+
+    /**
+     * @return Country
+     */
+    public static function none()
+    {
+        return static::create();
     }
 }
