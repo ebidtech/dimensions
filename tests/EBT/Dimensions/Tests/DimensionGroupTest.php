@@ -79,7 +79,7 @@ class DimensionGroupTest extends TestCase
             Country::create(1),
             Publisher::create()
         );
-        $this->assertEquals('b2c:glo:1:none', $dimensionGroup->__toString());
+        $this->assertEquals('b2c:glo:1:none', $dimensionGroup);
 
         $dimensionGroup = new DimensionGroup(
             BusinessType::none(),
@@ -87,7 +87,7 @@ class DimensionGroupTest extends TestCase
             Country::none(),
             Publisher::none()
         );
-        $this->assertEquals('none:none:none:none', $dimensionGroup->__toString());
+        $this->assertEquals('none:none:none:none', $dimensionGroup);
     }
 
     public function providerDimensions()

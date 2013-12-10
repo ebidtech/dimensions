@@ -144,7 +144,7 @@ class DimensionGroup implements CollectionDirectAccessInterface
      * Returns dimensions string representation.
      * Order is important so it will be maintained as:
      * BusinessType:Scope:Country:Publisher
-     * 
+     *
      * @return string
      */
     public function __toString()
