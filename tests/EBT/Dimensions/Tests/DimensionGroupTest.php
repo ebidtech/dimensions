@@ -71,6 +71,25 @@ class DimensionGroupTest extends TestCase
         $this->assertEquals($dimensionGroup, DimensionGroup::fromArray($dimensionGroup->toArray()));
     }
 
+    public function testToString()
+    {
+        $dimensionGroup = new DimensionGroup(
+            BusinessType::b2c(),
+            Scope::gglobal(),
+            Country::create(1),
+            Publisher::create()
+        );
+        $this->assertEquals('b2c:glo:1:none', $dimensionGroup->__toString());
+
+        $dimensionGroup = new DimensionGroup(
+            BusinessType::none(),
+            Scope::none(),
+            Country::none(),
+            Publisher::none()
+        );
+        $this->assertEquals('none:none:none:none', $dimensionGroup->__toString());
+    }
+
     public function providerDimensions()
     {
         return array(

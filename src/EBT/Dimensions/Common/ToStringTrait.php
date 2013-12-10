@@ -29,7 +29,7 @@ trait ToStringTrait
      */
     final public static function getNullStrRepresentation()
     {
-        return 'NA';
+        return 'none';
     }
 
     /**

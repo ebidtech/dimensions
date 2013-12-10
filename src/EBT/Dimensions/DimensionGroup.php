@@ -35,6 +35,8 @@ class DimensionGroup implements CollectionDirectAccessInterface
     }
     use GetCollectionTrait;
 
+    const TO_STRING_DIMENSION_SEPARATOR = ':';
+
     /**
      * @var DimensionInterface[]
      */
@@ -136,5 +138,28 @@ class DimensionGroup implements CollectionDirectAccessInterface
         $publisher = new Publisher($data[$publisherKey]);
 
         return new static($businessType, $scope, $country, $publisher);
+    }
+
+    /**
+     * Returns dimensions string representation.
+     * Order is important so it will be maintained as:
+     * BusinessType:Scope:Country:Publisher
+     * 
+     * @return string
+     */
+    public function __toString()
+    {
+        $stringRepresentation = sprintf(
+            '%s%s%s%s%s%s%s',
+            $this->getBusinessType(),
+            self::TO_STRING_DIMENSION_SEPARATOR,
+            $this->getScope(),
+            self::TO_STRING_DIMENSION_SEPARATOR,
+            $this->getCountry(),
+            self::TO_STRING_DIMENSION_SEPARATOR,
+            $this->getPublisher()
+        );
+
+        return $stringRepresentation;
     }
 }
