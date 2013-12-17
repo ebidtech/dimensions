@@ -93,6 +93,7 @@ class DimensionGroupTest extends TestCase
     public function providerDimensions()
     {
         return array(
+            array(BusinessType::none(), Scope::none(), Country::none(), Publisher::none()),
             array(BusinessType::b2b(), Scope::gglobal(), Country::none(), Publisher::none()),
             array(BusinessType::b2c(), Scope::publisher(), Country::create(1), Publisher::create(2))
         );
