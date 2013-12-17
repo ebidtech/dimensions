@@ -43,12 +43,10 @@ trait ValueTrait
      */
     protected function setEnum($value)
     {
-        $possible = static::getPossibleValues();
-        if ($value !== null && !in_array($value, $possible)) {
-            throw new InvalidArgumentException(sprintf('Expected one of "%s"', json_encode($possible)));
+        if (!is_null($value) && static::getNullStrRepresentation() !== $value) {
+            $this->possibleValuesOrException($value, static::getPossibleValues());
+            $this->value = $value;
         }
-
-        $this->value = $value;
     }
 
     /**
