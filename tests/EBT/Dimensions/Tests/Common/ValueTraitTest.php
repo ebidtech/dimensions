@@ -11,6 +11,7 @@
 
 namespace EBT\Dimensions\Tests\Common;
 
+use EBT\Dimensions\Common\ToStringTrait;
 use EBT\Dimensions\Tests\TestCase;
 use EBT\Dimensions\Common\ValueTrait;
 
@@ -20,6 +21,7 @@ use EBT\Dimensions\Common\ValueTrait;
 class ValueTraitTest extends TestCase
 {
     use ValueTrait;
+    use ToStringTrait;
 
     /**
      * @expectedException \EBT\Dimensions\Exception\InvalidArgumentException
