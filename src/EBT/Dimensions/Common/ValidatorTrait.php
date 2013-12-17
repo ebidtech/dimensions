@@ -39,4 +39,21 @@ trait ValidatorTrait
             );
         }
     }
+
+    /**
+     * Throws exception if values is not in the possible values
+     *
+     * @param mixed $value
+     * @param array $possibleValues
+     *
+     * @throws InvalidArgumentException
+     */
+    protected function possibleValuesOrException($value, array $possibleValues)
+    {
+        if (!in_array($value, $possibleValues)) {
+            throw new InvalidArgumentException(
+                sprintf('Expected one of "%s"', json_encode($possibleValues))
+            );
+        }
+    }
 }
