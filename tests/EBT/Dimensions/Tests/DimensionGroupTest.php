@@ -94,6 +94,8 @@ class DimensionGroupTest extends TestCase
     {
         return array(
             array(BusinessType::none(), Scope::none(), Country::none(), Publisher::none()),
+            array(BusinessType::none(), Scope::none(), Country::create(), Publisher::create()),
+            array(BusinessType::none(), Scope::none(), Country::create(1), Publisher::create(1)),
             array(BusinessType::b2b(), Scope::gglobal(), Country::none(), Publisher::none()),
             array(BusinessType::b2c(), Scope::publisher(), Country::create(1), Publisher::create(2))
         );
