@@ -31,9 +31,4 @@ trait ToStringTrait
     {
         return 'none';
     }
-
-    /**
-     * @inheritdoc
-     */
-    abstract public function getValue();
 }
