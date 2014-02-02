@@ -20,7 +20,6 @@ use EBT\Collection\IterableTrait;
 use EBT\Collection\CountableTrait;
 use EBT\Collection\EmptyTrait;
 use EBT\Collection\DirectAccessTrait;
-use EBT\Collection\GetCollectionTrait;
 use EBT\Collection\CollectionDirectAccessInterface;
 use EBT\Dimensions\Exception\InvalidArgumentException;
 
@@ -33,15 +32,20 @@ class DimensionGroup implements CollectionDirectAccessInterface
         get as protected getInternal;
         getOrException as protected getOrExceptionInternal;
     }
-    use GetCollectionTrait;
 
     const TO_STRING_DIMENSION_SEPARATOR = ':';
 
     /**
      * @var DimensionInterface[]
      */
-    protected $collection = array();
+    protected $dimensions = array();
 
+    /**
+     * @param BusinessType $businessType
+     * @param Scope        $scope
+     * @param Country      $country
+     * @param Publisher    $publisher
+     */
     public function __construct(BusinessType $businessType, Scope $scope, Country $country, Publisher $publisher)
     {
         $this->add($businessType);
@@ -51,13 +55,21 @@ class DimensionGroup implements CollectionDirectAccessInterface
     }
 
     /**
+     * @return Dimension\DimensionInterface[]
+     */
+    protected function &getItems()
+    {
+        return $this->dimensions;
+    }
+
+    /**
      * @param DimensionInterface $dimension
      *
      * @throws InvalidArgumentException In case a subtopic with same name is already present
      */
     protected function add(DimensionInterface $dimension)
     {
-        $this->collection[$dimension->getKey()] = $dimension;
+        $this->dimensions[$dimension->getKey()] = $dimension;
     }
 
     /**
