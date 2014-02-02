@@ -12,4 +12,6 @@ script:
   - vendor/bin/phpunit --coverage-text
 
 after_script:
+  - vendor/bin/phpcs -v --report=summary --standard=PSR1,PSR2 src/ tests/
+  - vendor/bin/phpmd src/,tests/ text codesize,unusedcode,design
   - vendor/bin/coveralls
